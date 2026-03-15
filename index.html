@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Clue – Anotações</title>
+
+<style>
+
+body {
+  font-family: sans-serif;
+  background: #fafafa;
+  padding: 16px;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+h2 {
+  margin-top: 20px;
+  margin-bottom: 6px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 16px;
+}
+
+th {
+  background: #f0f0f0;
+}
+
+td:first-child {
+  text-align: left;
+}
+
+td:last-child {
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* CORES DOS STATUS */
+
+.status-o {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-x {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🕵️ Clue – Anotações</h1>
+
+<h2>Quem?</h2>
+<table>
+<tr><th>Suspeito</th><th>Status</th></tr>
+<tr><td>Green</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Mostarda</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Peacock</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Plum</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Scarlet</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>White</td><td class="mark" onclick="toggle(this)">–</td></tr>
+</table>
+
+<h2>O quê?</h2>
+<table>
+<tr><th>Arma</th><th>Status</th></tr>
+<tr><td>Chave Inglesa</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Castiçal</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Faca</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Revólver</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Cano de Chumbo</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Corda</td><td class="mark" onclick="toggle(this)">–</td></tr>
+</table>
+
+<h2>Onde?</h2>
+<table>
+<tr><th>Cômodo</th><th>Status</th></tr>
+<tr><td>Banheiro</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Escritório</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Sala de Jantar</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Salão de Jogos</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Garagem</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Quarto</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Sala de Estar</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Cozinha</td><td class="mark" onclick="toggle(this)">–</td></tr>
+<tr><td>Entrada</td><td class="mark" onclick="toggle(this)">–</td></tr>
+</table>
+
+</div>
+
+<script>
+
+/* alternar estado */
+
+function toggle(cell) {
+
+cell.classList.remove("status-o","status-x")
+
+if (cell.textContent === "–") {
+cell.textContent = "O"
+cell.classList.add("status-o")
+}
+
+else if (cell.textContent === "O") {
+cell.textContent = "X"
+cell.classList.add("status-x")
+}
+
+else {
+cell.textContent = "–"
+}
+
+saveMarks()
+
+}
+
+/* salvar no navegador */
+
+function saveMarks(){
+
+const cells = document.querySelectorAll(".mark")
+
+const data = []
+
+cells.forEach(cell=>{
+data.push(cell.textContent)
+})
+
+localStorage.setItem("clueMarks",JSON.stringify(data))
+
+}
+
+/* carregar quando abrir */
+
+function loadMarks(){
+
+const saved = localStorage.getItem("clueMarks")
+
+if(!saved) return
+
+const data = JSON.parse(saved)
+
+const cells = document.querySelectorAll(".mark")
+
+cells.forEach((cell,i)=>{
+
+cell.textContent = data[i]
+
+cell.classList.remove("status-o","status-x")
+
+if(data[i]==="O") cell.classList.add("status-o")
+if(data[i]==="X") cell.classList.add("status-x")
+
+})
+
+}
+
+loadMarks()
+
+</script>
+
+</body>
+</html>
